@@ -53,7 +53,7 @@ app.layout = html.Div([
     dcc.Input(id='population-max', type='number', placeholder='Максимальная численность населения')
 ])
 
-@callback(
+@app.callback(
     Output('graph-content', 'figure'),
     Input('dropdown-selection', 'value'),
     Input('dropdown-measure', 'value')
@@ -64,7 +64,7 @@ def update_graph(selected_countries, measure):
     figure.update_xaxes(title_text='Год')
     figure.update_yaxes(title_text='Население')
     return figure
-@callback(
+@app.callback(
     Output('bubble-chart', 'figure'),
     Input('bubble-chart-measure', 'value'),
     Input('year-selector', 'value'),
@@ -88,7 +88,7 @@ def update_bubble_chart(selected_measures, year, population_min, population_max)
         text='country',
         labels={selected_measures[0]: selected_measures[0], selected_measures[1]: selected_measures[1]}
     )
-@callback(
+@app.callback(
     Output('top-population', 'figure'),
     Input('dropdown-measure', 'value'),
     Input('year-selector', 'value')
@@ -101,7 +101,7 @@ def update_bar_chart(measure, year):
     figure1.update_yaxes(title_text='Население')
     return figure1
 
-@callback(
+@app.callback(
     Output('pie-chart', 'figure'),
     Input('year-selector', 'value')
 )
@@ -109,3 +109,5 @@ def update_pie_chart(year):
     dff = df[df.year == year]
     continent_population = dff.groupby('continent').sum()['pop']
     return px.pie(continent_population, names=continent_population.index, values=continent_population)
+if __name__ == '__main__':
+    app.run(debug=True)

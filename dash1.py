@@ -1,18 +1,19 @@
 from dash import Dash, html, dcc, callback, Output, Input
 import plotly.express as px
 import pandas as pd
+import dash_bootstrap_components as dbc
 import dash_draggable
 
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder_unfiltered.csv')
 
 app = Dash(__name__)
-
+server = app.server
 app.layout = html.Div([
     html.H1(children='Численность стран планеты Земля', style={'textAlign':'center'}),
     dcc.Dropdown(
-        options=[{'label': country, 'value': country} for country in df.country.unique()], 
-        value=['Canada'], 
-        id='dropdown-selection', 
+        options=[{'label': country, 'value': country} for country in df.country.unique()],
+        value=['Canada'],
+        id='dropdown-selection',
         multi=True,
         persistence='local'
     ),
@@ -21,8 +22,8 @@ app.layout = html.Div([
             {'label': 'Ожидаемая продолжительность жизни', 'value': 'lifeExp'},
             {'label': 'Население', 'value': 'pop'},
             {'label': 'ВВП на душу населения', 'value': 'gdpPercap'}
-        ], 
-        value='pop', 
+        ],
+        value='pop',
         id='dropdown-measure',
         persistence='local'
     ),
@@ -111,4 +112,4 @@ def update_pie_chart(year):
     return px.pie(continent_population, names=continent_population.index, values=continent_population)
 
 if __name__ == '__main__':
-    server = app.server
+    app.run(debug=True)

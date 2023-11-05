@@ -6,8 +6,7 @@ import dash_draggable
 
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder_unfiltered.csv')
 
-app = dash.Dash(__name__)
-server = app.server
+app = Dash(__name__)
 app.layout = html.Div([
     html.H1(children='Численность стран планеты Земля', style={'textAlign':'center'}),
     dcc.Dropdown(

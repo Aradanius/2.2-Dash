@@ -109,6 +109,3 @@ def update_pie_chart(year):
     dff = df[df.year == year]
     continent_population = dff.groupby('continent').sum()['pop']
     return px.pie(continent_population, names=continent_population.index, values=continent_population)
-
-if __name__ == '__main__':
-    app.run(debug=True)
